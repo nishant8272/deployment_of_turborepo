@@ -16,8 +16,11 @@ jobs:
           touch /home/runner/.ssh/known_hosts
           echo "${{secrets.KNOWN_HOST}}" &> /home/runner/.ssh/known_hosts
           chmod 700 ~/dev_key
-          ssh -i ~/dev_key ubuntu@13.50.238.177 -t "cd deployment_of_turborepo/ && git pull origin main
-          && pnpm install && 
-          pm2 restart ws-server
-          && pm2 restart http-server && pm2 restart web-server"
+          ssh -i ~/dev_key ubuntu@13.50.238.177 -t "cd deployment_of_turborepo
+          && git pull origin main
+          && pnpm install 
+          && pm2 restart ws-server
+          && pm2 restart http-server 
+          && pm2 restart web-server
+          "
           
