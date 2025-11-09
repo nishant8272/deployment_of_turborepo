@@ -9,10 +9,12 @@
     "dev": "npm run build && npm run start"
   },
   "keywords": [],
+  
   "devDependencies": {
     "@repo/db": "workspace:*",
     "@repo/typescript-config": "workspace:*"
   },
+  
   "author": "",
   "license": "ISC",
   "type": "commonjs",

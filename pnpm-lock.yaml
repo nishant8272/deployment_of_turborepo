@@ -73,18 +73,18 @@ importers:
 
   apps/ws-server:
     dependencies:
-      '@repo/db':
-        specifier: workspace:*
-        version: link:../../packages/prisma
       ws:
         specifier: ^8.18.3
         version: 8.18.3
     devDependencies:
+      '@repo/db':
+        specifier: workspace:*
+        version: link:../../packages/prisma
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
       '@types/ws':
-        specifier: ^8.18.1
+        specifier: ^8.5.4
         version: 8.18.1
 
   packages/prisma:

@@ -1,5 +1,5 @@
 import React from 'react'
-import prisma from '@repo/db'
+import prisma from '@repo/db/client';
 
 export default  async function home() {
   const users  = await prisma.user.findFirst()
@@ -13,3 +13,4 @@ export default  async function home() {
     </div>
   )
 }
+

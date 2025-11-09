@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@repo/db": "workspace:*",
     "ws": "^8.18.3"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "@types/ws": "^8.18.1"
+     "@types/ws": "^8.5.4",
+    "@repo/db": "workspace:*"
   },
   "scripts": {
     "build": "tsc -b",
