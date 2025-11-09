@@ -17,6 +17,7 @@ jobs:
           echo "${{secrets.KNOWN_HOST}}" &> /home/runner/.ssh/known_hosts
           chmod 700 ~/dev_key
           ssh -i ~/dev_key ubuntu@13.50.238.177 -t "cd deployment_of_turborepo &&
+          npm install -g pnpm && export PATH=/root/.nvm/versions/node/v22.13.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin &&
           git pull origin main &&
           pnpm install && 
           pm2 restart ws-server &&
