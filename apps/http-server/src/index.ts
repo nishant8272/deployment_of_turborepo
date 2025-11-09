@@ -5,9 +5,18 @@ import prisma from "@repo/db/client";
 const app = express();
 app.use(express.json());
 
-app.get("/",(req,res)=>{
-
-    res.send("hello world")
+app.get("/",async (req,res)=>{
+   const user = await prisma.user.create({
+        data:{
+            name:Math.random().toString(),
+            email:Math.random().toString()
+        }
+    })
+    
+    res.json({
+        msg :"hii from server to nishant.",
+        user :user 
+    })
 })
 
 app.get("/user",async (req,res)=>{
