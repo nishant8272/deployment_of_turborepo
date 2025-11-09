@@ -1,0 +1,42 @@
+name: Deploy to dev
+on:
+  push:
+    branches:
+     - production 
+
+jobs:
+  redeploy_everything:
+    runs-on: ubuntu-latest
+    name: Redeploy Everything
+    steps:
+      - run: |
+          echo "${{ secrets.PRODUCTIONSERVERKEY }}" &> ~/dev_key
+          mkdir -p /home/runner/.ssh
+          ls  /home/runner/.ssh
+          touch /home/runner/.ssh/known_hosts
+          echo "${{secrets.KNOWN_HOST}}" &> /home/runner/.ssh/known_hosts
+          chmod 700 ~/dev_key
+          ssh -i ~/dev_key ubuntu@13.50.226.228 -t "
+            set -e &&
+            cd ~/deployment_of_turborepo &&
+
+            # Load nvm if installed
+            export NVM_DIR=\"\$HOME/.nvm\"
+            [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"
+
+            # Ensure Node.js 25 and pnpm
+            nvm install 25 || true &&
+            nvm use 25 &&
+            npm install -g pnpm &&
+
+            # Pull latest changes and rebuild
+            git pull origin production &&
+            pnpm install &&
+            pnpm run build &&
+
+            # Restart PM2 processes
+            pm2 restart ws-server || pm2 start apps/ws-server/dist/index.js --name ws-server &&
+            pm2 restart http-server || pm2 start apps/http-server/dist/index.js --name http-server &&
+            pm2 restart web-server || pm2 start apps/web/.next/standalone/server.js --name web-server
+          "
+          
