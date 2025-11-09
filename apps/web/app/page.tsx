@@ -5,10 +5,16 @@ export default  async function home() {
   const users  = await prisma.user.findFirst()
   return (
     <div>
+      <h1> this the next app </h1>
+     
+      <h2>name :</h2>
       {users?.name}
       <h2>
         Welcome to Next.js!
       </h2>
+      
+      <h1>
+      email :</h1>
       {users?.email}
     </div>
   )
