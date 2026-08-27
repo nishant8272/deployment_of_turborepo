@@ -1,46 +1,34 @@
+import express, { Express } from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import authRouter from "./routes/auth";
+import boardsRouter from "./routes/boards";
+import listsRouter from "./routes/lists";
+import cardsRouter from "./routes/cards";
 
-import express from "express";
-import prisma from "@repo/db/client";
-
-const app = express();
+const app: Express = express();
+app.use(cors({
+  origin: process.env.FRONTEND_URL || "http://localhost:3000",
+  credentials: true
+}));
 app.use(express.json());
+app.use(cookieParser());
 
-app.get("/",async (req,res)=>{
-   const user = await prisma.user.create({
-        data:{
-            name:Math.random().toString(),
-            email:Math.random().toString()
-        }
-    })
-    
-    res.json({
-        msg :"hii from server to nishant.",
-        user :user 
-    })
-})
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
 
-app.get("/user",async (req,res)=>{
-    const user = await prisma.user.findFirst({
-        where:{
-            email:"john@doe.com"
-        }
-    })
-    res.send(user)
-})
+// Routes
+app.use("/auth", authRouter);
+app.use("/boards", boardsRouter);
+app.use("/", listsRouter);
+app.use("/", cardsRouter);
 
-app.post("/user",async (req,res)=>{
-    const user = await prisma.user.create({
-        data:{
-            name:req.body.name,
-            email:req.body.email
-        }
-    })
-    res.json({
-    Message :"User created successfully",
-    user
-})
-})
+const PORT = process.env.PORT || 3002;
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`HTTP server started on port ${PORT}`);
+  });
+}
 
-app.listen(3002,()=>{
-    console.log("server started")
-})
+export default app;

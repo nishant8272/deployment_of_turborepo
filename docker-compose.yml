@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  http-server:
+    build:
+      context: .
+      dockerfile: apps/http-server/Dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      - DATABASE_URL=postgresql://myuser:mypassword@postgres:5432/mydb
+      - JWT_SECRET=super-secret-jwt-key-for-dev
+      - INTERNAL_WS_SECRET=docker-internal-secret-key
+      - PORT=3002
+      - WS_SERVER_URL=http://ws-server:3003
+      - FRONTEND_URL=http://localhost:3000
+    depends_on:
+      - postgres
+
+  ws-server:
+    build:
+      context: .
+      dockerfile: apps/ws-server/Dockerfile
+    ports:
+      - "3003:3003"
+    environment:
+      - DATABASE_URL=postgresql://myuser:mypassword@postgres:5432/mydb
+      - JWT_SECRET=super-secret-jwt-key-for-dev
+      - INTERNAL_WS_SECRET=docker-internal-secret-key
+      - PORT=3003
+    depends_on:
+      - postgres
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3002
+      - NEXT_PUBLIC_WS_URL=ws://localhost:3003
+
+volumes:
+  postgres_data:

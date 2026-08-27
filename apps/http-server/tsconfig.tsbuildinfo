@@ -1,1 +1,1 @@
-{"root":["./src/index.ts"],"version":"5.9.2"}
+{"root":["./src/index.ts","./src/__tests__/app.test.ts","./src/lib/broadcast.ts","./src/middleware/auth.ts","./src/middleware/boardauth.ts","./src/routes/auth.ts","./src/routes/boards.ts","./src/routes/cards.ts","./src/routes/lists.ts","./src/validators/auth.ts","./src/validators/board.ts","./src/validators/card.ts","./src/validators/cardmember.ts","./src/validators/comment.ts","./src/validators/list.ts"],"version":"5.9.2"}
