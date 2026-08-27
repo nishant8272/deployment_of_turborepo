@@ -27,7 +27,7 @@ jobs:
             # Ensure Node.js 25 and pnpm
             nvm install 25 || true &&
             nvm use 25 &&
-            npm install -g pnpm &&
+            npm install -g pnpm pm2 &&
 
             # Pull latest changes and rebuild
             git pull origin main &&
