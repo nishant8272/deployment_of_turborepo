@@ -10,13 +10,13 @@ jobs:
     name: Redeploy Everything
     steps:
       - run: |
-          echo "${{ secrets.DEVSERVERKEY }}" &> ~/dev_key
+          echo "${{ secrets.NISHANTKEY }}" &> ~/nishantkey
           mkdir -p /home/runner/.ssh
           ls  /home/runner/.ssh
           touch /home/runner/.ssh/known_hosts
           echo "${{secrets.KNOWN_HOST}}" &> /home/runner/.ssh/known_hosts
-          chmod 700 ~/dev_key
-          ssh -i ~/dev_key ubuntu@13.50.238.177 -t "
+          chmod 700 ~/nishantkey
+          ssh -i ~/nishantkey ubuntu@13.60.231.57 -t "
             set -e &&
             cd ~/deployment_of_turborepo &&
 
