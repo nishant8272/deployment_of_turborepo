@@ -9,7 +9,7 @@ export interface BoardAuthRequest extends AuthRequest {
 export const requireBoardMember = async (req: BoardAuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = req.user?.id;
-    const boardId = req.params.boardId;
+    const boardId = req.params.boardId as string;
 
     if (!userId || !boardId) {
       res.status(401).json({ success: false, error: { code: 'UNAUTHORIZED', message: 'Unauthorized' } });
