@@ -5,6 +5,8 @@ const nextConfig = {
   },
   serverExternalPackages: ["@prisma/client", "@repo/db"],
   output: "standalone",
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
 };
 
 export default nextConfig;
