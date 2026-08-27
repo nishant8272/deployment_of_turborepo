@@ -27,9 +27,15 @@ jobs:
 
       - name: Generate Prisma client
         run: pnpm run db:generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Build applications
         run: pnpm run build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Run tests
         run: pnpm test || true # Ensure workflow doesn't fail on missing tests during development
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
