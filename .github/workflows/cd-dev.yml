@@ -35,8 +35,8 @@ jobs:
             pnpm run build &&
 
             # Restart PM2 processes
-            pm2 restart ws-server || pm2 start apps/ws-server/dist/index.js --name ws-server &&
-            pm2 restart http-server || pm2 start apps/http-server/dist/index.js --name http-server &&
-            pm2 restart web-server || pm2 start apps/web/.next/standalone/server.js --name web-server
+            pm2 restart websocket || pm2 start apps/ws-server/dist/index.js --name websocket &&
+            pm2 restart http || pm2 start apps/http-server/dist/index.js --name http &&
+            pm2 restart web || pm2 start apps/web/.next/standalone/server.js --name web
           "
           
