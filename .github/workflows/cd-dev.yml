@@ -30,7 +30,8 @@ jobs:
             npm install -g pnpm pm2 &&
 
             # Pull latest changes and rebuild
-            git pull origin main &&
+            git fetch origin main &&
+            git reset --hard origin/main &&
             pnpm install &&
             pnpm run build &&
 
